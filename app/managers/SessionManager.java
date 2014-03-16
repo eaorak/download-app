@@ -66,12 +66,19 @@ public class SessionManager extends BaseManager implements RemovalListener<Strin
 		Logger.info("[SessionManager.logout] Session with id [%s] has removed.", sessionId);
 	}
 
-	public boolean valid(String sessionId, boolean fail) {
-		boolean valid = session(sessionId) != null;
-		if (fail) {
-			throw new RuntimeException("Invalid session !");
+	public static enum Result {
+		VALID, INVALID, UNAUTHORIZED;
+	}
+
+	public Result valid(String sessionId, String url) {
+		Session session = session(sessionId);
+		if (session == null) {
+			return Result.INVALID;
 		}
-		return valid;
+		if (!session.getUser().getRole().allowed(url)) {
+			return Result.UNAUTHORIZED;
+		}
+		return Result.VALID;
 	}
 
 	@Override

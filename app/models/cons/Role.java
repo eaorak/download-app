@@ -5,6 +5,20 @@ package models.cons;
  */
 public enum Role {
 
-	ADMIN, USER;
+	ADMIN("-"), //
+	USER("/admin");
+
+	private String restricted;
+
+	private Role(String restricted) {
+		this.restricted = restricted;
+	}
+
+	public boolean allowed(String url) {
+		if (url.startsWith(restricted)) {
+			return false;
+		}
+		return true;
+	}
 
 }

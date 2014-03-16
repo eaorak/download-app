@@ -31,6 +31,13 @@ public class User extends BaseModel {
 	public User() {
 	}
 
+	public User(String login, String name, String pass, Role role) {
+		this.login = login;
+		this.name = name;
+		this.pass = pass;
+		this.role = role;
+	}
+
 	public void addFile(File file) {
 		files.add(file);
 	}

@@ -2,15 +2,16 @@ package managers;
 
 import java.util.List;
 
+import managers.inf.IPersistenceManager;
 import models.BaseModel;
 import play.db.jpa.GenericModel.JPAQuery;
-import play.db.jpa.JPAPlugin;
 import play.db.jpa.JPQL;
+import play.jobs.Job;
 
 /**
  * @author ender
  */
-public class PersistenceManager extends BaseManager {
+public class PersistenceManager extends BaseManager implements IPersistenceManager {
 
 	private JPQL jpa;
 	private ThreadManager trm;
@@ -24,6 +25,7 @@ public class PersistenceManager extends BaseManager {
 		trm = M.get(ThreadManager.class);
 	}
 
+	@Override
 	public <T extends BaseModel> T findById(Class<T> model, String id) {
 		try {
 			return (T) jpa.findById(model.getName(), id);
@@ -32,35 +34,36 @@ public class PersistenceManager extends BaseManager {
 		}
 	}
 
+	@Override
 	public <T extends BaseModel> List<T> find(Class<T> model, String query, Object... params) {
 		JPAQuery q = jpa.find(model.getName(), query, params);
 		List<T> list = q.fetch();
 		return list;
 	}
 
+	@Override
 	public <T extends BaseModel> T findFirst(Class<T> model, String query, Object... params) {
 		List<T> list = find(model, query, params);
 		return list.size() == 0 ? null : list.get(0);
 	}
 
+	@Override
 	public <T extends BaseModel> T save(T model) {
 		return model.save();
 	}
 
+	@Override
 	public <T extends BaseModel> void save(final T model, boolean async) {
 		if (!async) {
 			save(model);
 			return;
 		}
-		Runnable r = new Runnable() {
+		new Job() {
 			@Override
-			public void run() {
-				play.Play.plugin(JPAPlugin.class).startTx(true);
+			public void doJob() {
 				model.save();
-				play.Play.plugin(JPAPlugin.class).closeTx(false);
-			}
-		};
-		trm.execute(r);
+			};
+		}.now();
 	}
 
 	@Override

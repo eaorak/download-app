@@ -64,6 +64,7 @@ public class M {
 				System.exit(-1);
 			}
 		}
+		initialized = true;
 	}
 
 }

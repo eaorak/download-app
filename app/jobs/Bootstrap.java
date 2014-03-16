@@ -18,6 +18,7 @@ import play.test.Fixtures;
 @OnApplicationStart
 public class Bootstrap extends Job {
 
+	@Override
 	public void doJob() {
 		initManagers();
 		initData();

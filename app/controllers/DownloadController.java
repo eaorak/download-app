@@ -32,7 +32,7 @@ public class DownloadController extends BaseController {
 		response.contentType = file.getType();
 		User user = session().getUser();
 		Download download = new Download(file, user, url);
-		pem.save(download);
+		pem.save(download, true);
 		renderBinary(realUrl.openStream());
 	}
 

@@ -2,6 +2,7 @@ package controllers;
 
 import managers.M;
 import managers.SessionManager;
+import managers.SessionManager.Result;
 import models.cons.Session;
 import play.Logger;
 import play.mvc.Before;
@@ -18,12 +19,19 @@ public class BaseController extends Controller {
 	public static SessionManager ssm = M.get(SessionManager.class);
 
 	@Before(priority = 1, unless = { "LoginController.login", "LoginController.authenticate" })
-	public static void authorize() {
+	protected static void authorize() {
 		String sessionId = sessionId();
 		if (sessionId != null) {
-			boolean valid = ssm.valid(sessionId, false);
-			if (valid) {
+			Result valid = ssm.valid(sessionId, request.url);
+			switch (valid) {
+			case VALID:
 				return;
+			case INVALID:
+				break;
+			case UNAUTHORIZED:
+				error("You are not authorized for this page.");
+			default:
+				break;
 			}
 		}
 		renderTemplate("LoginController/login.html");

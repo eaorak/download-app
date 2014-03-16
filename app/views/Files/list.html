@@ -10,7 +10,10 @@
     </div>
 
     <div id="crudListTable">
-        #{crud.table fields:['name', 'login']/}
+		#{crud.table fields:['name', 'type', 'url', 'uid']}
+			#{crud.custom 'url'} <a href="${object.url}">${object.url}</a>
+			#{/crud.custom} 
+		#{/crud.table}
     </div>
 
     <div id="crudListPagination">
