@@ -2,6 +2,8 @@ package managers;
 
 import java.util.concurrent.TimeUnit;
 
+import managers.inf.IDownloadManager;
+import managers.inf.IPersistenceManager;
 import models.File;
 import models.User;
 import play.Logger;
@@ -15,11 +17,11 @@ import com.google.common.cache.RemovalNotification;
 /**
  * @author ender
  */
-public class DownloadManager extends BaseManager implements RemovalListener<String, File> {
+public class DownloadManager extends BaseManager implements IDownloadManager, RemovalListener<String, File> {
 
 	private final int EXPIRE = 10; // Minutes
 	private Cache<String, File> files;
-	private PersistenceManager pem;
+	private IPersistenceManager pem;
 
 	public DownloadManager() {
 	}

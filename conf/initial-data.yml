@@ -1,16 +1,10 @@
 User(u1):
-    login: "eaorak@gmail.com"
-    name: "Ender Aydin Orak"
-    pass: "gdyb21LQTcIANtvYMT7QVQ=="
-    role: USER
-
-User(u2):
     login: "user@sahibinden.com"
     name: "Generic User"
     pass: "gdyb21LQTcIANtvYMT7QVQ=="
     role: USER
 
-User(u3):
+User(u2):
     login: "admin@sahibinden.com"
     name: "Admin"
     pass: "gdyb21LQTcIANtvYMT7QVQ=="

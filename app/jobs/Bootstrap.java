@@ -4,6 +4,7 @@ import java.util.List;
 
 import managers.M;
 import managers.PersistenceManager;
+import managers.inf.IPersistenceManager;
 import models.BaseModel;
 import models.File;
 import models.User;
@@ -31,18 +32,26 @@ public class Bootstrap extends Job {
 	private void initData() {
 		deleteAll();
 		//
-		PersistenceManager pem = M.get(PersistenceManager.class);
+		IPersistenceManager pem = M.get(PersistenceManager.class);
+		// Test data
 		if (pem.find(User.class, "").size() == 0) {
 			Fixtures.loadModels("initial-data.yml");
-			User user = pem.findFirst(User.class, "login=?", "eaorak@gmail.com");
+			User user = pem.findFirst(User.class, "login=?", "user@sahibinden.com");
 			//
-			File file = new File("Annox.pdf", "http://elron.co/files/annox.pdf", "application/pdf");
+			File file = new File("JavaSwing.pdf",
+					"http://www.baskent.edu.tr/~tkaracay/etudio/ders/prg/java/ch27/JavaSwing.pdf", "application/pdf");
 			user.addFile(file);
 			//
-			file = new File("Annox1.pdf", "http://elron.co/files/annox.pdf", "application/pdf");
+			file = new File("ScalaTutorial.pdf", "http://www.scala-lang.org/docu/files/ScalaTutorial.pdf",
+					"application/pdf");
 			user.addFile(file);
 			//
-			file = new File("Annox2.pdf", "http://elron.co/files/annox.pdf", "application/pdf");
+			file = new File("Cat wallpaper", "http://miriadna.com/desctopwalls/images/max/Green-cat-eyes.jpg",
+					"image/jpeg");
+			user.addFile(file);
+			//
+			file = new File("Java ppt", "http://www.cs.virginia.edu/~evans/cs205/classes/class4/lecture4.ppt",
+					"application/vnd.ms-powerpoint");
 			user.addFile(file);
 			//
 			pem.save(user);

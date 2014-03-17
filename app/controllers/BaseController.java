@@ -3,6 +3,7 @@ package controllers;
 import managers.M;
 import managers.SessionManager;
 import managers.SessionManager.Result;
+import managers.inf.ISessionManager;
 import models.cons.Session;
 import play.Logger;
 import play.mvc.Before;
@@ -16,7 +17,7 @@ import play.mvc.Http.Cookie;
 public class BaseController extends Controller {
 
 	public static final String COOKIE = "downapp";
-	public static SessionManager ssm = M.get(SessionManager.class);
+	public static ISessionManager ssm = M.get(SessionManager.class);
 
 	@Before(priority = 1, unless = { "LoginController.login", "LoginController.authenticate" })
 	protected static void authorize() {

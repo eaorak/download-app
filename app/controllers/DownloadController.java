@@ -5,6 +5,8 @@ import java.net.URL;
 import managers.DownloadManager;
 import managers.M;
 import managers.PersistenceManager;
+import managers.inf.IDownloadManager;
+import managers.inf.IPersistenceManager;
 import models.Download;
 import models.File;
 import models.User;
@@ -14,8 +16,8 @@ import models.User;
  */
 public class DownloadController extends BaseController {
 
-	private static PersistenceManager pem = M.get(PersistenceManager.class);
-	private static DownloadManager dom = M.get(DownloadManager.class);
+	private static IPersistenceManager pem = M.get(PersistenceManager.class);
+	private static IDownloadManager dom = M.get(DownloadManager.class);
 
 	public static void generate(String id) throws Exception {
 		String tempurl = dom.generateUrl(id);

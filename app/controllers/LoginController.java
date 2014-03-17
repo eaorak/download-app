@@ -2,6 +2,7 @@ package controllers;
 
 import managers.M;
 import managers.SessionManager;
+import managers.inf.ISessionManager;
 import models.cons.Session;
 import play.data.validation.Required;
 
@@ -10,7 +11,7 @@ import play.data.validation.Required;
  */
 public class LoginController extends BaseController {
 
-	private static SessionManager ssm = M.get(SessionManager.class);
+	private static ISessionManager ssm = M.get(SessionManager.class);
 
 	public static void login() {
 		render();

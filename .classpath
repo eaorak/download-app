@@ -73,5 +73,6 @@
 	<classpathentry kind="lib" path="/Users/ender/elron/tools/play-1.2.5.3/framework/lib/xstream-1.4.2.jar"/>
 	<classpathentry kind="lib" path="lib/guava-16.0.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/crud"/>
+	<classpathentry kind="lib" path="lib/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="output" path="eclipse/classes"/>
 </classpath>

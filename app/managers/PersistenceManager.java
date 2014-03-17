@@ -14,7 +14,6 @@ import play.jobs.Job;
 public class PersistenceManager extends BaseManager implements IPersistenceManager {
 
 	private JPQL jpa;
-	private ThreadManager trm;
 
 	public PersistenceManager() {
 	}
@@ -22,10 +21,8 @@ public class PersistenceManager extends BaseManager implements IPersistenceManag
 	@Override
 	public void initialize() {
 		jpa = play.db.jpa.JPQL.instance;
-		trm = M.get(ThreadManager.class);
 	}
 
-	@Override
 	public <T extends BaseModel> T findById(Class<T> model, String id) {
 		try {
 			return (T) jpa.findById(model.getName(), id);
@@ -34,25 +31,21 @@ public class PersistenceManager extends BaseManager implements IPersistenceManag
 		}
 	}
 
-	@Override
 	public <T extends BaseModel> List<T> find(Class<T> model, String query, Object... params) {
 		JPAQuery q = jpa.find(model.getName(), query, params);
 		List<T> list = q.fetch();
 		return list;
 	}
 
-	@Override
 	public <T extends BaseModel> T findFirst(Class<T> model, String query, Object... params) {
 		List<T> list = find(model, query, params);
 		return list.size() == 0 ? null : list.get(0);
 	}
 
-	@Override
 	public <T extends BaseModel> T save(T model) {
 		return model.save();
 	}
 
-	@Override
 	public <T extends BaseModel> void save(final T model, boolean async) {
 		if (!async) {
 			save(model);

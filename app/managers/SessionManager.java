@@ -2,6 +2,8 @@ package managers;
 
 import java.util.concurrent.TimeUnit;
 
+import managers.inf.IPersistenceManager;
+import managers.inf.ISessionManager;
 import models.User;
 import models.cons.Session;
 import play.Logger;
@@ -17,14 +19,14 @@ import com.google.common.cache.RemovalNotification;
 /**
  * @author ender
  */
-public class SessionManager extends BaseManager implements RemovalListener<String, Session> {
+public class SessionManager extends BaseManager implements ISessionManager, RemovalListener<String, Session> {
 
 	private final int ACCESS = 10; // In minutes
 	private final int LIFETIME = 3; // In hours
 	private final String LIFETIME_PLAY = LIFETIME + "h";
 	//
 	private Cache<String, Session> sessions;
-	private PersistenceManager pem;
+	private IPersistenceManager pem;
 
 	public SessionManager() {
 	}

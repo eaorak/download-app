@@ -23,19 +23,19 @@ public class File extends BaseModel {
 		uid = Util.uuid();
 	}
 
+	public File(String name, String url, String type) {
+		this();
+		this.name = name;
+		this.url = url;
+		this.type = type;
+	}
+
 	public String getUid() {
 		return uid;
 	}
 
 	public void setUid(String uid) {
 		this.uid = uid;
-	}
-
-	public File(String name, String url, String type) {
-		this();
-		this.name = name;
-		this.url = url;
-		this.type = type;
 	}
 
 	public String getName() {

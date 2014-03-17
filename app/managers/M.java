@@ -19,7 +19,7 @@ public class M {
 
 	private static M instance = new M();
 	//
-	private Map<Class<?>, BaseManager> managers = new HashMap<Class<?>, BaseManager>();
+	private Map<Class<?>, Object> managers = new HashMap<Class<?>, Object>();
 	private boolean initialized;
 
 	private M() {
@@ -33,22 +33,27 @@ public class M {
 		return (T) instance.managers.get(mc);
 	}
 
+	public void inject(Class<?> mc, Object instance) {
+		managers.put(mc, instance);
+	}
+
 	public synchronized void initialize() {
 		if (initialized) {
 			throw new RuntimeException("Invalid call !");
 		}
 		List<Class> list = Play.classloader.getAssignableClasses(BaseManager.class);
+		List<BaseManager> mglist = new ArrayList<BaseManager>();
 		for (Class c : list) {
 			try {
 				Logger.info("Creating manager: [%s]", c.getSimpleName());
 				BaseManager m = (BaseManager) c.newInstance();
+				mglist.add(m);
 				managers.put(m.getClass(), m);
 			} catch (Exception e) {
 				Logger.error(e, "FATAL !!! Error on create !");
 				System.exit(-1);
 			}
 		}
-		List<BaseManager> mglist = new ArrayList<BaseManager>(managers.values());
 		Collections.sort(mglist, new Comparator<BaseManager>() {
 			@Override
 			public int compare(BaseManager o1, BaseManager o2) {
