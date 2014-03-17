@@ -11,7 +11,7 @@
 
     <div id="crudListTable">
 		#{crud.table fields:['name', 'type', 'url', 'uid']}
-			#{crud.custom 'url'} <a href="${object.url}">${object.url}</a>
+			#{crud.custom 'url'} <a href="${object.url}">${(object.url+"                                                       ").substring(0,55)}</a>
 			#{/crud.custom} 
 		#{/crud.table}
     </div>
